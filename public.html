@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Discord Alert</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    #alert {
+      display: none;
+      color: #00ffea;
+      font-size: 36px;
+      text-align: center;
+      animation: fade 1s ease-in-out;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 0 10px #00ffe4;
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="alert"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const alertEl = document.getElementById("alert");
+
+    socket.on("discord-alert", (message) => {
+      alertEl.textContent = message;
+      alertEl.style.display = "block";
+      setTimeout(() => {
+        alertEl.style.display = "none";
+      }, 8000);
+    });
+  </script>
+</body>
+</html>
